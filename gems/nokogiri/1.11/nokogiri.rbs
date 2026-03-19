@@ -2206,9 +2206,9 @@ module Nokogiri::XML::Searchable
 
   def at: (*untyped args) -> Nokogiri::XML::Node?
 
-  def at_css: (*untyped args) -> untyped
+  def at_css: (*untyped args) -> Nokogiri::XML::Node?
 
-  def at_xpath: (*untyped args) -> untyped
+  def at_xpath: (*untyped args) -> Nokogiri::XML::Node?
 
   def css: (*untyped args) -> Nokogiri::XML::NodeSet
 
