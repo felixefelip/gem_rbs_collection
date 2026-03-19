@@ -4690,26 +4690,26 @@ class String
   #   %{ Multi-line
   #      string }.squish                   # => "Multi-line string"
   #   " foo   bar    \n   \t   boo".squish # => "foo bar boo"
-  def squish: () -> untyped
+  def squish: () -> String
 
   # Performs a destructive squish. See String#squish.
   #   str = " foo   bar    \n   \t   boo"
   #   str.squish!                         # => "foo bar boo"
   #   str                                 # => "foo bar boo"
-  def squish!: () -> untyped
+  def squish!: () -> String
 
   # Returns a new string with all occurrences of the patterns removed.
   #   str = "foo bar test"
   #   str.remove(" test")                 # => "foo bar"
   #   str.remove(" test", /bar/)          # => "foo "
   #   str                                 # => "foo bar test"
-  def remove: (*untyped patterns) -> untyped
+  def remove: (*untyped patterns) -> String
 
   # Alters the string by removing all occurrences of the patterns.
   #   str = "foo bar test"
   #   str.remove!(" test", /bar/)         # => "foo "
   #   str                                 # => "foo "
-  def remove!: (*untyped patterns) -> untyped
+  def remove!: (*untyped patterns) -> String
 
   # Truncates a given +text+ after a given <tt>length</tt> if +text+ is longer than <tt>length</tt>:
   #
@@ -4729,7 +4729,7 @@ class String
   #
   #   'And they found that many people were sleeping better.'.truncate(25, omission: '... (continued)')
   #   # => "And they f... (continued)"
-  def truncate: (untyped truncate_at, ?::Hash[untyped, untyped] options) -> untyped
+  def truncate: (untyped truncate_at, ?::Hash[untyped, untyped] options) -> String
 
   # Truncates +text+ to at most <tt>bytesize</tt> bytes in length without
   # breaking string encoding by splitting multibyte characters or breaking
@@ -4745,7 +4745,7 @@ class String
   #
   # The truncated text ends with the <tt>:omission</tt> string, defaulting
   # to "(trim non-ascii characters)", for a total length not exceeding <tt>bytesize</tt>.
-  def truncate_bytes: (untyped truncate_at, ?omission: ::String omission) -> untyped
+  def truncate_bytes: (untyped truncate_at, ?omission: ::String omission) -> String
 
   # Truncates a given +text+ after a given number of words (<tt>words_count</tt>):
   #
@@ -4761,7 +4761,7 @@ class String
   #
   #   'And they found that many people were sleeping better.'.truncate_words(5, omission: '... (continued)')
   #   # => "And they found that many... (continued)"
-  def truncate_words: (untyped words_count, ?::Hash[untyped, untyped] options) -> untyped
+  def truncate_words: (untyped words_count, ?::Hash[untyped, untyped] options) -> String
 end
 
 class String
