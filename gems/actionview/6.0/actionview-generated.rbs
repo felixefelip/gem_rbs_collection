@@ -6612,7 +6612,7 @@ module ActionView
       # that include HTML tags so that you know what kind of output to expect
       # when you call translate in a template and translators know which keys
       # they can provide HTML values for.
-      def translate: (untyped key, **untyped options) -> untyped
+      def translate: (String | Symbol | Array[untyped] key, ?throw: bool throw, ?raise: bool raise, ?locale: untyped? locale, **untyped options) -> String
 
       alias t translate
 
