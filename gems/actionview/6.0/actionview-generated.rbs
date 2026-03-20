@@ -494,7 +494,7 @@ module ActionView
     module ActiveModelInstanceTag
       def object: () -> untyped
 
-      def content_tag: (untyped `type`, untyped options) -> untyped
+      def content_tag: (untyped `type`, untyped options) -> String
 
       def tag: (untyped `type`, untyped options) -> untyped
 

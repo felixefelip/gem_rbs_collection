@@ -1573,7 +1573,7 @@ module ActionView
       #     Hello world!
       #   <% end -%>
       #    # => <div class="strong">Hello world!</div>
-      def content_tag: (untyped name, ?untyped? content_or_options_with_block, ?untyped? options, ?bool escape) ?{ () -> untyped } -> untyped
+      def content_tag: ((String | Symbol) name, ?untyped? content_or_options_with_block, ?untyped? options, ?bool escape) ?{ () -> untyped } -> String
     end
   end
 end
