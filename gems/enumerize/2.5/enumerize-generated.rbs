@@ -90,11 +90,11 @@ module Enumerize
 
     def each_value: () { (untyped) -> untyped } -> untyped
 
-    def i18n_scopes: () -> untyped
+    def i18n_scopes: () -> Array[String]
 
-    def options: (?::Hash[untyped, untyped] options) -> untyped
+    def options: (?::Hash[untyped, untyped] options) -> Array[Array[untyped]]
 
-    def respond_to_missing?: (untyped method, ?bool include_private) -> untyped
+    def respond_to_missing?: (untyped method, ?bool include_private) -> bool
 
     def define_methods!: (untyped mod) -> untyped
 
