@@ -23,22 +23,28 @@ module ActiveJob
   class Continuation
     # Raised when a job is interrupted, allowing Active Job to requeue it.
     # Inherits from Exception (not StandardError) so it's not caught by rescue.
-    class Interrupt < ::Exception; end
+    class Interrupt < ::Exception
+    end
 
     # Base class for all Continuation errors.
-    class Error < ::StandardError; end
+    class Error < ::StandardError
+    end
 
     # Raised when a step definition is invalid.
-    class InvalidStepError < Error; end
+    class InvalidStepError < Error
+    end
 
     # Raised when there is an error with a checkpoint (e.g. open DB transactions).
-    class CheckpointError < Error; end
+    class CheckpointError < Error
+    end
 
     # Raised when attempting to advance a cursor that doesn't implement `succ`.
-    class UnadvanceableCursorError < Error; end
+    class UnadvanceableCursorError < Error
+    end
 
     # Raised when a job has reached its maximum number of resumptions.
-    class ResumeLimitError < Error; end
+    class ResumeLimitError < Error
+    end
 
     def started?: () -> bool
     def advanced?: () -> bool
