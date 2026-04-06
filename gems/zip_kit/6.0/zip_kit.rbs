@@ -4,10 +4,8 @@ class ZipKit::RemoteIO
   def size: () -> Integer
   def read: (?Integer? n_bytes) -> String?
   def tell: () -> Integer
-
-  protected
-    def request_range: (Range[Integer] range) -> String
-    def request_object_size: () -> Integer
+  def request_range: (Range[Integer] range) -> String
+  def request_object_size: () -> Integer
 
   private
     def clamp: (Integer a, Integer b, Integer c) -> Integer
