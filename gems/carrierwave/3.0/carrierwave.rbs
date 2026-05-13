@@ -1,4 +1,27 @@
 module CarrierWave
+  # Error hierarchy from lib/carrierwave/error.rb and lib/carrierwave/uploader/cache.rb.
+  # All classes are empty subclasses used purely for `rescue` discrimination.
+  class UploadError < ::StandardError
+  end
+
+  class IntegrityError < ::CarrierWave::UploadError
+  end
+
+  class InvalidParameter < ::CarrierWave::UploadError
+  end
+
+  class ProcessingError < ::CarrierWave::UploadError
+  end
+
+  class DownloadError < ::CarrierWave::UploadError
+  end
+
+  class FormNotMultipart < ::CarrierWave::UploadError
+  end
+
+  class UnknownStorageError < ::StandardError
+  end
+
   module ActiveRecord
     include CarrierWave::Mount
   end
