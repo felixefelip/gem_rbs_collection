@@ -9,10 +9,10 @@ module ActiveRecord
     include TokenFor
     extend TokenFor::ClassMethods
 
-    module ClassMethods[Model, Relation, PrimaryKey]
+    module ClassMethods[Model, Relation, PrimaryKey, ValidatedModel = Model]
       def and: (::ActiveRecord::Relation) -> Relation
       def strict_loading: (?bool value) -> Relation
-      def sole: () -> Model
+      def sole: () -> (Model & ValidatedModel)
       def from: (untyped value, ?untyped? subquery_name) -> untyped
     end
   end
@@ -222,20 +222,20 @@ end
 
 module ActiveRecord
   class Relation
-    module Methods[Model, PrimaryKey]
+    module Methods[Model, PrimaryKey, ValidatedModel = Model]
       def and: (::ActiveRecord::Relation) -> self
-      def authenticate_by: (untyped attributes) -> Model?
+      def authenticate_by: (untyped attributes) -> (Model & ValidatedModel)?
       def with: (*untyped args) -> self
       def with_recursive: (*untyped) -> self
       def with_recursive!: (*untyped) -> self
       def reorder: (*untyped args) -> self
       def unscope: (*untyped args) -> self
-      def sole: () -> Model
+      def sole: () -> (Model & ValidatedModel)
     end
   end
 
   class Base
-    module ClassMethods[Model, Relation, PrimaryKey]
+    module ClassMethods[Model, Relation, PrimaryKey, ValidatedModel = Model]
       def with: (*untyped args) -> Relation
       def with_recursive: (*untyped) -> Relation
       def reorder: (*untyped args) -> Relation
