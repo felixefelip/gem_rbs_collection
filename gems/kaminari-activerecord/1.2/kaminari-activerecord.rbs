@@ -19,13 +19,17 @@ end
 
 module ActiveRecord
   class Base
-    module ClassMethods[Model, Relation, PrimaryKey]
+    # Match the 4-param signature introduced in
+    # gems/activerecord/7.2/activerecord.rbs (felixefelip/steep#10):
+    # ValidatedModel defaults to Model, so callers that pass only the legacy
+    # 3 args keep their current behavior.
+    module ClassMethods[Model, Relation, PrimaryKey, ValidatedModel = Model]
       def page: (?_ToI num) -> Relation
     end
   end
 
   class Relation
-    module Methods[Model, PrimaryKey]
+    module Methods[Model, PrimaryKey, ValidatedModel = Model]
       include Kaminari::ActiveRecordRelationMethods
       include Kaminari::PageScopeMethods
       def page: (?_ToI num) -> self
