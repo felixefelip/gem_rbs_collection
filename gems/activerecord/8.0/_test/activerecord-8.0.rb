@@ -68,6 +68,15 @@ module Test
   user.articles.upsert({ id: 1, name: 'James' }, returning: %i[id name], unique_by: :id, record_timestamps: true)
   user.articles.upsert_all([{ id: 1, name: 'James' }], returning: %i[id name], unique_by: :id, record_timestamps: true)
   user.generate_token_for(:password_reset)
+  user.signed_id
+  user.signed_id(expires_in: 15.minutes, purpose: :password_reset)
+  user.signed_id(expires_at: Time.now + 900, purpose: "password_reset")
+  User.find_signed(user.signed_id)&.id
+  User.find_signed(user.signed_id, purpose: :password_reset, on_rotation: -> { })&.id
+  User.find_signed!(user.signed_id).id
+  User.all.find_signed(user.signed_id)&.id
+  User.all.find_signed!(user.signed_id).id
+  user.articles.find_signed(user.signed_id)&.id
   user.values_at(:name, :age)
   user.values_at("name", :age)
   user.strict_loading!
