@@ -100,15 +100,17 @@ module ActionController
 
       extend ::ActionController::HttpAuthentication::Token
 
+      # `authenticate_or_request_with_http_token`, `authenticate_with_http_token`
+      # and `Token#authenticate` are deliberately NOT declared here: rbs_infer
+      # transcribes their real bodies into the consuming app's controller-runtime
+      # sidecar, so the checker can follow what they do with the block — which a
+      # signature cannot express. RBS refuses two declarations of one method on
+      # one owner, and a body must stay in the owner it was written in for its
+      # constants to resolve, so the declaration is the one that gives way.
+      # See felixefelip/rbs_infer#144.
       module ControllerMethods
-        def authenticate_or_request_with_http_token: (?String realm, ?String? message) { (String token, ActiveSupport::HashWithIndifferentAccess[untyped, untyped] options) -> boolish } -> untyped
-
-        def authenticate_with_http_token: () { (String token, ActiveSupport::HashWithIndifferentAccess[untyped, untyped] options) -> boolish } -> boolish
-
         def request_http_token_authentication: (?String realm, ?String? message) -> void
       end
-
-      def authenticate: (instance controller) { (String token, ActiveSupport::HashWithIndifferentAccess[untyped, untyped] options) -> boolish } -> boolish
 
       def token_and_options: (ActionDispatch::Request request) -> [String, ActiveSupport::HashWithIndifferentAccess[untyped, untyped]]?
 
