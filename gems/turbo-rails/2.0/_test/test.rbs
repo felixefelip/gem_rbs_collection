@@ -1,0 +1,9 @@
+class Board < ActiveRecord::Base
+  def dom_id: () -> String
+end
+
+class Message < ActiveRecord::Base
+  # Declared so the `broadcasts_to ->(message) { ... }` call-sites prove the
+  # lambda's parameter is bound to the concrete model, not to `untyped`.
+  def board: () -> Board
+end
