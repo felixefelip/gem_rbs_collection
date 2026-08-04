@@ -55,3 +55,19 @@ User.all.sum(0.0) { |user| user.age.to_f }.next_float
 
 t = User.arel_table
 User.limit(10).select(:id, "name", t[:age].as("years"), t[:email])
+
+# The whole find-or-create family takes `&block` in Rails, so the block is optional.
+User.where(name: 'name').create
+User.where(name: 'name').create!
+User.where(name: 'name').first_or_create
+User.where(name: 'name').first_or_create!
+User.where(name: 'name').first_or_initialize
+User.where(name: 'name').create_or_find_by(name: 'name')
+User.where(name: 'name').create_or_find_by!(name: 'name')
+user.articles.where(user_id: 1).first_or_create
+user.articles.where(user_id: 1).build
+
+# Passing the block still type-checks.
+User.where(name: 'name').create { |record| record }
+User.where(name: 'name').first_or_create { |record| record }
+User.where(name: 'name').create_or_find_by(name: 'name') { |record| record }
