@@ -1,0 +1,9 @@
+class TestRelationDelegation < ActiveRecord::Base
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include ActiveRecord::Relation::Methods[TestRelationDelegation, Integer]
+  end
+
+  extend ActiveRecord::Base::ClassMethods[TestRelationDelegation, ActiveRecord_Relation, Integer]
+
+  def self.delegated_on_a_relation: () -> void
+end
