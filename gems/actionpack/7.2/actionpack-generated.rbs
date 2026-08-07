@@ -3299,6 +3299,14 @@ module ActionController
   #   params[:key]  # => "value"
   #   params["key"] # => "value"
   class Parameters
+    # What `permit` accepts: scalars, and arrays/hashes of them nested to
+    # any depth. `permit_filters` flattens the arguments and only acts on
+    # `Symbol`, `String` and `Hash`; anything else is silently ignored.
+    type filter = Symbol
+                | String
+                | Array[filter]
+                | Hash[Symbol | String, filter]
+
     # Returns a new instance of <tt>ActionController::Parameters</tt>.
     # Also, sets the +permitted+ attribute to the default value of
     # <tt>ActionController::Parameters.permit_all_parameters</tt>.
@@ -3569,7 +3577,7 @@ module ActionController
     #
     #   params.require(:person).permit(contact: [ :email, :phone ])
     #   # => <ActionController::Parameters {"contact"=><ActionController::Parameters {"email"=>"none@test.com", "phone"=>"555-1234"} permitted: true>} permitted: true>
-    def permit: (*untyped filters) -> untyped
+    def permit: (*filter filters) -> instance
 
     # Returns a parameter for the given +key+. If not found,
     # returns +nil+.
@@ -3674,13 +3682,13 @@ module ActionController
 
     # Returns a new <tt>ActionController::Parameters</tt> with all keys from
     # current hash merged into +other_hash+.
-    def reverse_merge: (untyped other_hash) -> untyped
+    def reverse_merge: (_ToH[untyped, untyped] other_hash) -> instance
 
     alias with_defaults reverse_merge
 
     # Returns current <tt>ActionController::Parameters</tt> instance with
     # current hash merged into +other_hash+.
-    def reverse_merge!: (untyped other_hash) -> untyped
+    def reverse_merge!: (_ToH[untyped, untyped] other_hash) -> self
 
     alias with_defaults! reverse_merge!
 
