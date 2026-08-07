@@ -16,6 +16,13 @@ class BazController < ActionController::Base
   def create
     params.permit(:title, comment: [:body]).permitted?
     params.with_defaults(page: 1).permitted?
+
+    # The conversions are reachable only once the receiver is permitted.
+    params.permit(:title).to_h
+    params.permit(:title).to_hash
+    params.permit(:title).to_query('user')
+    params.permit!.to_h
+    params.permit(:title).permit(:body).to_h
   end
 end
 
