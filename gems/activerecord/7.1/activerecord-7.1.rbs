@@ -13,6 +13,18 @@ module ActiveRecord
       def and: (::ActiveRecord::Relation) -> Relation
       def strict_loading: (?bool value) -> Relation
       def sole: () -> Model
+      # `Model.build` (Rails 7.1+) initializes without saving, so it returns a
+      # plain Model — same as `find_or_initialize_by`. The Array overload comes
+      # first: `untyped` would otherwise swallow an Array of attribute hashes
+      # and hand back a single Model instead of one record per hash.
+      #
+      # Declared here rather than beside `find_or_initialize_by` because
+      # `7.1/activerecord.rbs` is a symlink to `6.0`'s, shared with 6.0/6.1/7.0
+      # — versions that have no `Model.build`.
+      def build: (Array[untyped] attributes) -> Array[Model]
+               | (Array[untyped] attributes) { (Model) -> void } -> Array[Model]
+               | (?untyped attributes) -> Model
+               | (?untyped attributes) { (Model) -> void } -> Model
     end
   end
 
