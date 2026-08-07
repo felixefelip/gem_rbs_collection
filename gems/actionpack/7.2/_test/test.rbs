@@ -4,5 +4,9 @@ end
 class BarController < ActionController::Base
 end
 
+class BazController < ActionController::Base
+  def create: () -> void
+end
+
 class FooService
 end

@@ -3836,7 +3836,7 @@ module ActionController
   module StrongParameters
     # Returns a new ActionController::Parameters object that
     # has been instantiated with the <tt>request.parameters</tt>.
-    def params: () -> untyped
+    def params: () -> ActionController::Parameters
 
     # Assigns the given +value+ to the +params+ hash. If +value+
     # is a Hash, this will create an ActionController::Parameters

@@ -12,6 +12,13 @@ class FooService
   include ActionDispatch::Routing::RouteSet.new.url_helpers
 end
 
+class BazController < ActionController::Base
+  def create
+    params.permit(:title, comment: [:body]).permitted?
+    params.with_defaults(page: 1).permitted?
+  end
+end
+
 parameters = ActionController::Parameters.new
 
 # Every filter shape `permit_filters` acts on, nested to depth.
