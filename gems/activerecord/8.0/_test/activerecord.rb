@@ -69,3 +69,20 @@ class TestRelationDelegation < ActiveRecord::Base
     relation.name.upcase
   end
 end
+
+# `Model.build` (Rails 7.1+) initializes a record without saving it. Passing an
+# Array of attribute hashes builds one record per hash instead.
+class TestModelBuild < ActiveRecord::Base
+  def self.builds
+    build.own_method
+    build(name: "x").own_method
+    build(name: "x") { |record| record.own_method }.own_method
+
+    records = build([{ name: "x" }, { name: "y" }])
+    records.size
+    records.each { |record| record.own_method }
+  end
+
+  def own_method
+  end
+end

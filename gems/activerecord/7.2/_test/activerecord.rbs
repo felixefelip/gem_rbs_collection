@@ -37,3 +37,14 @@ class TestRelationDelegation < ActiveRecord::Base
 
   def self.delegated_on_a_relation: () -> void
 end
+
+class TestModelBuild < ActiveRecord::Base
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include ActiveRecord::Relation::Methods[TestModelBuild, Integer]
+  end
+
+  extend ActiveRecord::Base::ClassMethods[TestModelBuild, ActiveRecord_Relation, Integer]
+
+  def self.builds: () -> void
+  def own_method: () -> void
+end
