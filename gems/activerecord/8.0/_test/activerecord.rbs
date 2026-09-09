@@ -41,3 +41,14 @@ class TestModelBuild < ActiveRecord::Base
   def self.builds: () -> void
   def own_method: () -> void
 end
+
+class TestInBatches < ActiveRecord::Base
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include ActiveRecord::Relation::Methods[TestInBatches, Integer]
+  end
+
+  extend ActiveRecord::Base::ClassMethods[TestInBatches, ActiveRecord_Relation, Integer]
+
+  def self.batches: () -> void
+  def own_method: () -> void
+end

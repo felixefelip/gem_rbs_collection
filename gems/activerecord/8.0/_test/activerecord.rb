@@ -86,3 +86,29 @@ class TestModelBuild < ActiveRecord::Base
   def own_method
   end
 end
+
+# `in_batches` without a block returns a `BatchEnumerator`, whose `delete_all`,
+# `update_all`, `touch_all` and `destroy_all` run the operation batch by batch.
+class TestInBatches < ActiveRecord::Base
+  def self.batches
+    where(id: 1).in_batches.destroy_all.succ
+    where(id: 1).in_batches(of: 100).delete_all.succ
+    where(id: 1).in_batches.update_all(name: "x").succ
+    where(id: 1).in_batches.touch_all.succ
+
+    in_batches.destroy_all.succ
+
+    where(id: 1).in_batches.each { |relation| relation.update_all(name: "x") }
+    where(id: 1).in_batches.each_record { |record| record.own_method }
+
+    # `find_in_batches` without a block returns an Enumerator over the batches.
+    where(id: 1).find_in_batches.each { |records| records.each { |record| record.own_method } }
+    find_in_batches.each { |records| records.first&.own_method }
+
+    # The block form still type-checks, and still yields a relation.
+    where(id: 1).in_batches { |relation| relation.update_all(name: "x") }
+  end
+
+  def own_method
+  end
+end
