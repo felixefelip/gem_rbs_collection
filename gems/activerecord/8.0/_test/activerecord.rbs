@@ -52,3 +52,14 @@ class TestInBatches < ActiveRecord::Base
   def self.batches: () -> void
   def own_method: () -> void
 end
+
+class TestGroupedRelation < ActiveRecord::Base
+  class ActiveRecord_Relation < ActiveRecord::Relation
+    include ActiveRecord::Relation::Methods[TestGroupedRelation, Integer]
+  end
+
+  extend ActiveRecord::Base::ClassMethods[TestGroupedRelation, ActiveRecord_Relation, Integer]
+
+  def self.grouped: () -> void
+  def own_method: () -> void
+end
