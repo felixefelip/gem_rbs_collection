@@ -112,3 +112,36 @@ class TestInBatches < ActiveRecord::Base
   def own_method
   end
 end
+
+# `group` answers an `ActiveRecord::Relation::Grouped`, so the rest of the chain
+# still has a type: `having` is declared only there, `exists?` still answers
+# `bool`, and the calculations answer the hash a grouped query actually returns.
+class TestGroupedRelation < ActiveRecord::Base
+  def self.grouped
+    # @type var grouped_exists: bool
+    grouped_exists = where(id: 1)
+      .group(:name)
+      .having("COUNT(*) >= ?", 3)
+      .having("COUNT(DISTINCT author_id) >= ?", 2)
+      .exists?
+
+    # Grouping is sticky: the methods that spawn a new relation keep it, so a
+    # `having` after an `order` still resolves.
+    group(:name).where(id: 1).order(:name).having("COUNT(*) > 0").count.each_key { |key| key }
+
+    # A grouped calculation answers a hash keyed by the grouped column, not the
+    # scalar an ungrouped relation would give.
+    group(:name).count.each_pair { |_key, value| value.succ }
+    group(:name).maximum(:id).each_key { |key| key }
+
+    # The block form of `count` is `Enumerable#count` over the loaded records,
+    # not a calculation at all, so it keeps its scalar.
+    group(:name).count { |record| record.own_method }.succ
+
+    # And the records themselves are still reachable.
+    group(:name).first&.own_method
+  end
+
+  def own_method
+  end
+end
